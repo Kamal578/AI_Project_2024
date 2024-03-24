@@ -105,6 +105,10 @@ class DecisionTree:
         n_right = len(y_right)
         n_total = n_left + n_right
 
+        # Check if either n_left or n_right is zero to avoid division by zero
+        if n_left == 0 or n_right == 0:
+            return 0  # If either node has no samples, return 0 impurity
+
         gini_left = 1 - sum([(np.sum(y_left == i) / n_left) ** 2 for i in range(self.n_classes)])
         gini_right = 1 - sum([(np.sum(y_right == i) / n_right) ** 2 for i in range(self.n_classes)])
 
