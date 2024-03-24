@@ -3,8 +3,8 @@
 This repository contains implementations of decision tree and random forest models for both classification and regression tasks. Additionally, it includes utility functions for evaluating model performance.
 
 ## Structure
-
 - **data**: Contains CSV files (`winequality-red_NO_ALCOHOL.csv` and `winequality-white_NO_ALCOHOL.csv`) with wine quality data.
+- **report**: LaTeX files for the project report. Contains report in PDF format itself as well.
 - **src**: Source code directory containing Python files for model implementations.
   - `BaseModel.py`: Base class for all models.
   - `DecisionTree.py`: Implementation of decision tree models for classification and regression.
