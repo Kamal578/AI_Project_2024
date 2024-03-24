@@ -1,12 +1,11 @@
 """
-Test the RandomForest class on the wine quality datasets
+Test the DecisionTree class on the wine quality datasets
 """
 
-import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from src.RandomForest import RandomForest
+from src.DecisionTree import DecisionTree
 from utils import categorical_accuracy, mae_accuracy, mse_accuracy, max_dif
 
 ds_path_1 = '../data/winequality-red_NO_ALCOHOL.csv'
@@ -17,7 +16,7 @@ df1 = pd.read_csv(ds_path_1, sep=';')
 df2 = pd.read_csv(ds_path_2, sep=';')
 
 
-def test_random_forest(dataset: pd.DataFrame):
+def test_decision_tree(dataset: pd.DataFrame):
     # Split the dataset into training and testing sets
     X = dataset.drop('quality', axis=1).values
     y = dataset['quality'].values
@@ -25,11 +24,11 @@ def test_random_forest(dataset: pd.DataFrame):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
     # Train the model
-    forest = RandomForest(n_trees=100, max_depth=10, min_samples_split=2)
-    forest.fit(X_train, y_train)
+    tree = DecisionTree(max_depth=10, min_samples_split=2)
+    tree.fit(X_train, y_train)
 
     # Predict the target values
-    y_pred = forest.predict(X_test)
+    y_pred = tree.predict(X_test)
 
     # Calculate the accuracy
     m = max_dif(y)
@@ -40,9 +39,9 @@ def test_random_forest(dataset: pd.DataFrame):
 
 if __name__ == '__main__':
     print('Red wine dataset:')
-    test_random_forest(df1)
+    test_decision_tree(df1)
 
     print('\n--------------------------------\n')
 
     print('White wine dataset:')
-    test_random_forest(df2)
+    test_decision_tree(df2)

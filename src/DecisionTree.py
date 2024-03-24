@@ -4,7 +4,7 @@ import numpy as np
 class DecisionTree:
     """ Decision Tree Classifier """
 
-    def __init__(self, max_depth=None, min_samples_split=None):
+    def __init__(self, max_depth, min_samples_split):
         """
         :param max_depth: maximum depth of the tree
         :param min_samples_split: minimum number of samples required to split an internal node
