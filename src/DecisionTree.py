@@ -9,8 +9,10 @@ class BaseDecisionTree(BaseModel, ABC):
 
     def __init__(self, max_depth, min_samples_split, name=None):
         """
-        :param max_depth: maximum depth of the tree
-        :param min_samples_split: minimum number of samples required to split an internal node
+        Initialize the DecisionTree object.
+
+        :param max_depth: Maximum depth of the tree. If None, the tree grows until all leaves are pure.
+        :param min_samples_split: Minimum number of samples required to split an internal node.
         """
         super().__init__()
         self.name = name
@@ -23,10 +25,10 @@ class BaseDecisionTree(BaseModel, ABC):
 
     def fit(self, X, y):
         """
-        Fit the model to the training data
+        Fit the model to the training data.
 
-        :param X: training data
-        :param y: target values
+        :param X: Training data, a numpy array where each row represents a sample and each column represents a feature.
+        :param y: Target values, a numpy array containing the labels for each sample in X.
         """
         self.n_features = X.shape[1]
 
@@ -34,36 +36,40 @@ class BaseDecisionTree(BaseModel, ABC):
 
     def predict(self, X):
         """
-        Predict the target values
+        Predict the target values for input data.
 
-        :param X: input data
-        :return: predicted target values
+        :param X: Input data, a numpy array where each row represents a sample and each column represents a feature.
+        :return: Predicted target values for each sample in X.
         """
         return np.array([self._predict(inputs) for inputs in X])
 
     def _grow_tree(self, X, y, depth=0):
         """
-        Recursively grow the tree
+        Recursively grow the decision tree.
 
-        :param X: input data
-        :param y: target values
-        :param depth: current depth of the tree
-        :return: node of the tree if it is a leaf, otherwise a tuple of the split feature, threshold, left and right trees
+        :param X: Input data for the current node.
+        :param y: Target values for the current node.
+        :param depth: Current depth of the tree.
+        :return: Node of the tree if it is a leaf, otherwise a tuple of the split feature, threshold, left and right trees.
         """
         n_samples = X.shape[0]
         mean = np.mean(y)
 
+        # Check termination conditions
         if (self.max_depth is not None and depth >= self.max_depth) or \
            (self.min_samples_split is not None and n_samples < self.min_samples_split):
             return mean
 
+        # Find the best feature and threshold for splitting
         feature, threshold = self._best_split(X, y)
         if feature is None:
             return mean
 
+        # Split the data based on the best feature and threshold
         left_indices = X[:, feature] < threshold
         right_indices = ~left_indices
 
+        # Recursively grow the left and right subtrees
         left_tree = self._grow_tree(X[left_indices], y[left_indices], depth + 1)
         right_tree = self._grow_tree(X[right_indices], y[right_indices], depth + 1)
 
@@ -108,7 +114,7 @@ class BaseDecisionTree(BaseModel, ABC):
             for threshold in thresholds:
                 left_indices = X[:, feature] < threshold
                 right_indices = ~left_indices
-
+                
                 if np.sum(left_indices) == 0 or np.sum(right_indices) == 0:
                     continue
 
@@ -117,7 +123,7 @@ class BaseDecisionTree(BaseModel, ABC):
                 current_variance = left_variance + right_variance
 
                 if current_variance < best_variance:
-                    best_variance = current_variance
+                    best_variance = current_variancen
                     best_feature = feature
                     best_threshold = threshold
 

@@ -21,10 +21,10 @@ class BaseRandomForest(BaseModel, ABC):
 
     def fit(self, X, y):
         """
-        Fit the model to the training data
+        Fit the model to the training data.
 
-        :param X: training data
-        :param y: target values
+        :param X: Training data, a numpy array where each row represents a sample and each column represents a feature.
+        :param y: Target values, a numpy array containing the labels for each sample in X.
         """
         n_samples, n_features = X.shape
 
@@ -38,11 +38,12 @@ class BaseRandomForest(BaseModel, ABC):
 
     def predict(self, X):
         """
-        Predict the target values
+        Predict the target values for input data.
 
-        :param X: input data
-        :return: predicted target values
+        :param X: Input data, a numpy array where each row represents a sample and each column represents a feature.
+        :return: Predicted target values for each sample in X.
         """
+        # Make predictions with each tree in the forest
         predictions = np.array([tree.predict(X) for tree in self.trees])
         return self._aggregate_predictions(predictions)
 
