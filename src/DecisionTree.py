@@ -123,7 +123,7 @@ class BaseDecisionTree(BaseModel, ABC):
                 current_variance = left_variance + right_variance
 
                 if current_variance < best_variance:
-                    best_variance = current_variancen
+                    best_variance = current_variance
                     best_feature = feature
                     best_threshold = threshold
 
