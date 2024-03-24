@@ -1,8 +1,8 @@
 from abc import ABC
+
 import numpy as np
 
 from src.BaseModel import BaseModel
-
 from src.DecisionTree import DecisionTreeRegressor, DecisionTreeClassifier
 
 

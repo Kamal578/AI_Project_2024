@@ -1,4 +1,5 @@
 from abc import ABC
+
 import numpy as np
 
 from src.BaseModel import BaseModel
@@ -57,7 +58,7 @@ class BaseDecisionTree(BaseModel, ABC):
 
         # Check termination conditions
         if (self.max_depth is not None and depth >= self.max_depth) or \
-           (self.min_samples_split is not None and n_samples < self.min_samples_split):
+                (self.min_samples_split is not None and n_samples < self.min_samples_split):
             return mean
 
         # Find the best feature and threshold for splitting
@@ -114,7 +115,7 @@ class BaseDecisionTree(BaseModel, ABC):
             for threshold in thresholds:
                 left_indices = X[:, feature] < threshold
                 right_indices = ~left_indices
-                
+
                 if np.sum(left_indices) == 0 or np.sum(right_indices) == 0:
                     continue
 
